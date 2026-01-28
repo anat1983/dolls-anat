@@ -790,7 +790,7 @@ const missionControl = {
             "חקלאות: הקיבוץ מתבסס על מטעי אבוקדו וגידולי שדה.",
             "אגדות דשא: הקיבוץ ידוע באווירה התרבותית הייחודית שהתפתחה בו."
         ], 
-        photos: ["https://www.kibbutzvisit.com/wp-content/uploads/2020/09/kibbutz-mishmarot.jpg"],
+        photos: ["https://he.wikipedia.org/wiki/%D7%9E%D7%A9%D7%9E%D7%A8%D7%95%D7%AA"],
         x: 24, y: 26 
     },
     "moshav_megiddo": { 
@@ -905,5 +905,6 @@ const missionControl = {
     }
 
 };
+
 
 
