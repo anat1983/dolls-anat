@@ -779,7 +779,7 @@ const missionControl = {
             "צוק הכורכר: רכס כורכר טבעי היורד בתלילות אל הים.",
             "צבי ים: החוף משמש אתר הטלה חשוב לצבי ים."
         ], 
-        photos: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4TjCI9Az5juNDkyOOuNDODvjVd4lZMwKyNA&s"],
+        photos: ["https://he.wikipedia.org/wiki/%D7%97%D7%95%D7%A3_%D7%A4%D7%9C%D7%9E%D7%97%D7%99%D7%9D"],
         x: 26, y: 36 
     },
     "mishmarot": { 
@@ -905,4 +905,5 @@ const missionControl = {
     }
 
 };
+
 
