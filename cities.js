@@ -735,7 +735,7 @@ const missionControl = {
             "חלקאות אורגנית: הקיבוץ מגדל תמרים, זיתים וכרמים בשיטות אורגניות.",
             "נווה מדבר: הקיבוץ מהווה נקודה ירוקה ופורחת בלב המדבר השומם."
         ], 
-        photos: ["https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop"],
+        photos: ["https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/PikiWiki_Israel_18686_Arts_Center_in_Kibbutz_Neot_Semadar.JPG/960px-PikiWiki_Israel_18686_Arts_Center_in_Kibbutz_Neot_Semadar.JPG"],
         x: 48, y: 86 
     },
     "kibbutz_ketura": { 
@@ -746,7 +746,7 @@ const missionControl = {
             "ערבה אינסטיטוט: מכון מחקר סביבתי המפגיש סטודנטים ישראלים, ירדנים ופלסטינים.",
             "אצות: בקיבוץ פועל מפעל חדשני לגידול אצות (אסטקסנטין)."
         ], 
-        photos: ["https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop"],
+        photos: ["https://upload.wikimedia.org/wikipedia/commons/8/87/KeturaMar172022_01.jpg"],
         x: 50, y: 90 
     },
     "kibbutz_lotan": { 
@@ -757,7 +757,7 @@ const missionControl = {
             "יהדות רפורמית: לוטן הוא אחד הקיבוצים המזוהים עם התנועה הרפורמית.",
             "גן אקולוגי: המבקרים יכולים ללמוד כיצד לחיות בהרמוניה עם הסביבה המדברית."
         ], 
-        photos: ["https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop"],
+        photos: ["https://upload.wikimedia.org/wikipedia/commons/b/b0/PikiWiki_Israel_18706_Ecological_Quarter_in_Kibbutz_Lotan_in_Arava_valle.JPG"],
         x: 48, y: 88 
     },
     "kibbutz_evrona": { 
@@ -905,3 +905,4 @@ const missionControl = {
     }
 
 };
+
