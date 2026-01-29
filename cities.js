@@ -8,7 +8,7 @@ const missionControl = {
             "חוק העיר העתיקה: בעיר העתיקה ארבעה רובעים: היהודי, המוסלמי, הנוצרי והארמני.",
             "אבן ירושלמית: חוק עירוני מחייב ציפוי מבנים באבן ירושלמית, המעניקה לעיר את גוון הזהב שלה."
         ],
-        photos: ["https://images.unsplash.com/photo-1571157236917-4e5dc8476555?w=400&h=300&fit=crop"],
+        photos: ["https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/121086-Jerusalem-Mount-of-Olives_%2826988237083%29.jpg/330px-121086-Jerusalem-Mount-of-Olives_%2826988237083%29.jpg"],
         x: 50, y: 39 
     },
     "tel_aviv": { 
@@ -20,7 +20,7 @@ const missionControl = {
             "רצועת החוף: לעיר יש רצועת חוף באורך של כ-14 קילומטרים המושכת מיליוני תיירים.",
             "יפו העתיקה: העיר משלבת את יפו העתיקה, אחת מערי הנמל העתיקות בעולם."
         ], 
-        photos: ["https://images.unsplash.com/photo-1537236398214-4e4d8876a2b0?w=400&h=300&fit=crop"],
+        photos: ["https://upload.wikimedia.org/wikipedia/he/thumb/b/b4/Tel_aviv22.jpg/500px-Tel_aviv22.jpg"],
         x: 30, y: 30 
     },
     "haifa": { 
@@ -31,7 +31,7 @@ const missionControl = {
             "הכרמלית: בחיפה פועלת הרכבת התחתית היחידה בישראל (שהיא למעשה פוניקולר).",
             "עיר נמל: נמל חיפה הוא אחד הנמלים הגדולים והחשובים במזרח התיכון."
         ], 
-        photos: ["https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop"],
+        photos: ["https://upload.wikimedia.org/wikipedia/commons/9/97/Downtown_Haifa_including_the_port_and_the_sail_tower.jpg"],
         x: 25, y: 20 
     },
     "beersheba": { 
@@ -42,7 +42,7 @@ const missionControl = {
             "באר אברהם: על פי המסורת, זוהי העיר בה חפר אברהם אבינו את הבאר וכרת ברית עם אבימלך.",
             "אדריכלות ברוטליסטית: העיר ידועה במבני בטון ייחודיים ושכונות שתוכננו כניסוי אדריכלי בשנות ה-50."
         ], 
-        photos: ["https://images.unsplash.com/photo-1600313872099-eb7d52282cf1?w=400&h=300&fit=crop"],
+        photos: ["https://upload.wikimedia.org/wikipedia/commons/4/4f/BeershebaCityHallDec142022.jpg"],
         x: 45, y: 70 
     },
     "safed": { 
@@ -64,7 +64,7 @@ const missionControl = {
             "מורשת עולמית: העיר העתיקה של עכו הוכרזה כאתר מורשת עולמית של אונסק\"ו.",
             "השוק והנמל: עכו ידועה בשוק התוסס שלה, בנמל הדייגים ובחומוס המפורסם."
         ], 
-        photos: ["https://images.unsplash.com/photo-1518709450063-6f3ee1c02a27?w=400&h=300&fit=crop"],
+        photos: ["https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Aerial_view_of_Acre_1.jpg/330px-Aerial_view_of_Acre_1.jpg"],
         x: 20, y: 18 
     },
     "dead_sea": { 
@@ -75,7 +75,7 @@ const missionControl = {
             "בוץ מרפא: הבוץ המינרלי של ים המלח ידוע בסגולותיו הרפואיות לעור.",
             "בולענים: בשנים האחרונות נוצרו אלפי בולענים בחופים עקב ירידת מפלס המים."
         ], 
-        photos: ["https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop"],
+        photos: ["https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/%D7%A1%D7%9C%D7%A2%D7%99%D7%9D_%D7%91%D7%99%D7%9D_%D7%94%D7%9E%D7%9C%D7%97_%D7%91%27.jpg/500px-%D7%A1%D7%9C%D7%A2%D7%99%D7%9D_%D7%91%D7%99%D7%9D_%D7%94%D7%9E%D7%9C%D7%97_%D7%91%27.jpg"],
         x: 55, y: 55 
     },
     "nazareth": { 
@@ -86,7 +86,7 @@ const missionControl = {
             "שוק נצרת: שוק עתיק וצבעוני המציע תבלינים, בדים וממתקים מסורתיים (כנאפה).",
             "ישו מנצרת: העיר מזוהה כמקום בו גדל ישו, ולכן היא מוקד עלייה לרגל לצליינים."
         ], 
-        photos: ["https://images.unsplash.com/photo-1488744115696-de83e8bdb2a9?w=400&h=300&fit=crop"],
+        photos: ["https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/PikiWiki_Israel_17818_Cities_in_Israel.jpg/250px-PikiWiki_Israel_17818_Cities_in_Israel.jpg"],
         x: 32, y: 22 
     },
     "tiberias": { 
@@ -97,7 +97,7 @@ const missionControl = {
             "חמי טבריה: העיר ידועה עוד מהתקופה הרומית בזכות המעיינות החמים הטבעיים שלה.",
             "אחת מארבע ערי הקודש: יחד עם ירושלים, חברון וצפת."
         ], 
-        photos: ["https://images.unsplash.com/photo-1493857671505-72967e2e2760?w=400&h=300&fit=crop"],
+        photos: ["https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/92250_tiberias_PikiWiki_Israel.jpg/330px-92250_tiberias_PikiWiki_Israel.jpg"],
         x: 38, y: 28 
     },
     "netanya": { 
@@ -108,7 +108,7 @@ const missionControl = {
             "הטיילת: העיר מתגאה במערכת טיילות ארוכה ומטופחת לאורך הים.",
             "אירוס הארגמן: בשמורת האירוסים בדרום העיר פורח בחורף אירוס הארגמן הנדיר."
         ], 
-        photos: ["https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop"],
+        photos: ["https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/20201130_153836_%D7%9E%D7%91%D7%98_%D7%9E%D7%9C%D7%9E%D7%A2%D7%9C%D7%94_%D7%A2%D7%9C_%D7%A9%D7%9C%D7%95%D7%9C%D7%99%D7%AA_%D7%94%D7%97%D7%95%D7%A8%D7%A3_%D7%91%D7%A0%D7%AA%D7%A0%D7%99%D7%94.jpg/500px-20201130_153836_%D7%9E%D7%91%D7%98_%D7%9E%D7%9C%D7%9E%D7%A2%D7%9C%D7%94_%D7%A2%D7%9C_%D7%A9%D7%9C%D7%95%D7%9C%D7%99%D7%AA_%D7%94%D7%97%D7%95%D7%A8%D7%A3_%D7%91%D7%A0%D7%AA%D7%A0%D7%99%D7%94.jpg"],
         x: 28, y: 25 
     },
     "ashdod": { 
@@ -119,7 +119,7 @@ const missionControl = {
             "עיר מתוכננת: אשדוד תוכננה מראש עם רחובות רחבים ורובעים מסודרים.",
             "גבעת יונה: על פי המסורת, זהו מקום קברו של יונה הנביא."
         ], 
-        photos: ["https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop"],
+        photos: ["https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Ashdod_Port_Aerial_View.jpg/2560px-Ashdod_Port_Aerial_View.jpg"],
         x: 22, y: 40 
     },
     "ashkelon": { 
@@ -130,7 +130,7 @@ const missionControl = {
             "עיר פלישתית: בתקופת התנ\"ך הייתה אחת מחמשת ערי סרני הפלישתים.",
             "רצועת החוף: לאשקלון יש רצועת חוף ארוכה ומרינה בינלאומית גדולה."
         ], 
-        photos: ["https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop"],
+        photos: ["https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Ashkelon_Panorama_Image.JPG/500px-Ashkelon_Panorama_Image.JPG"],
         x: 18, y: 42 
     },
     "eilat": { 
@@ -141,7 +141,7 @@ const missionControl = {
             "שונית האלמוגים: באילת נמצאת שונית האלמוגים הצפונית ביותר בעולם.",
             "נקודת מפגש גבולות: מאילת ניתן לראות את ירדן (עקבה), מצרים (טאבה) וערב הסעודית."
         ], 
-        photos: ["https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop"],
+        photos: [""],
         x: 50, y: 95 
     },
     "ramat_gan": { 
@@ -174,7 +174,7 @@ const missionControl = {
             "שוק פתח תקווה: השוק העירוני עבר חידוש והפך למתחם קולינרי שוקק.",
             "בילינסון: בעיר נמצא אחד המרכזים הרפואיים הגדולים והחשובים בישראל."
         ], 
-        photos: ["https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop"],
+        photos: [""],
         x: 32, y: 33 
     },
     "beit_shemesh": { 
@@ -185,7 +185,7 @@ const missionControl = {
             "מערת הנטיפים: בסמוך לעיר נמצאת מערת אבשלום, אחת ממערות הנטיפים היפות בעולם.",
             "קצב צמיחה: בית שמש היא אחת הערים בעלות קצב הצמיחה המהיר ביותר בישראל."
         ], 
-        photos: ["https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop"],
+        photos: ["https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/%D7%A8%D7%9E%D7%AA_%D7%91%D7%99%D7%AA_%D7%A9%D7%9E%D7%A9_%D7%92%27.tif/lossless-page1-2560px-%D7%A8%D7%9E%D7%AA_%D7%91%D7%99%D7%AA_%D7%A9%D7%9E%D7%A9_%D7%92%27.tif.png"],
         x: 42, y: 45 
     },
     "modiin": { 
@@ -903,4 +903,5 @@ const missionControl = {
         photos: ["https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Snir_neighborhood.jpg/250px-Snir_neighborhood.jpg"],
         x: 42, y: 14 
     }
+
 };
