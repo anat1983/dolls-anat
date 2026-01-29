@@ -20,7 +20,7 @@ const missionControl = {
             "רצועת החוף: לעיר יש רצועת חוף באורך של כ-14 קילומטרים המושכת מיליוני תיירים.",
             "יפו העתיקה: העיר משלבת את יפו העתיקה, אחת מערי הנמל העתיקות בעולם."
         ], 
-        photos: ["https://images.unsplash.com/photo-1537236398214-4e4d8876a2b0?w=400&h=300&fit=crop"],
+        photos: ["https://he.wikipedia.org/wiki/%D7%AA%D7%9C_%D7%90%D7%91%D7%99%D7%91-%D7%99%D7%A4%D7%95"],
         x: 30, y: 30 
     },
     "haifa": { 
@@ -414,4 +414,5 @@ const missionControl = {
         x: 55, y: 35 
     }
 };
+
 
