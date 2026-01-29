@@ -295,7 +295,7 @@ const missionControl = {
             "מפלי התנור: בסמוך למושבה נמצאת שמורת נחל עיון עם מפל התנור המרשים.",
             "גבול הלבנון: המושבה מוקפת משלושה כיוונים בגבול עם לבנון."
         ], 
-        photos: ["https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop"],
+        photos: ["https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Metula_and_Hermon.JPG/500px-Metula_and_Hermon.JPG"],
         x: 40, y: 8 
     },
     "mitzpe_ramon": { 
@@ -306,7 +306,7 @@ const missionControl = {
             "יעלים: יעלים נוביים מסתובבים באופן חופשי ברחובות העיירה.",
             "מרכז אילן רמון: מרכז מבקרים המנציח את האסטרונאוט הישראלי הראשון."
         ], 
-        photos: ["https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop"],
+        photos: ["https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Ramon_Crater_1.jpg/640px-Ramon_Crater_1.jpg"],
         x: 52, y: 75 
     },
     "kiryat_shmona": { 
@@ -317,7 +317,7 @@ const missionControl = {
             "רכבל צוק מנרה: מהעיר יוצא הרכבל הארוך בישראל המעפיל לרכס רמים.",
             "נחלים: נחל הזהב (עין זהב) זורם בתוך הפארק העירוני במרכז העיר."
         ], 
-        photos: ["https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop", "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop"],
+        photos: ["https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Qiryat_Shemona_2007.JPG/330px-Qiryat_Shemona_2007.JPG"],
         x: 42, y: 12 
     },
     "nahariya": { 
@@ -905,4 +905,5 @@ const missionControl = {
     }
 
 };
+
 
