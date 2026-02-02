@@ -257,6 +257,10 @@ function confirmCitySelection() {
 
     console.log("Starting Firebase upload...");
 
+    // Test Firebase connection
+    console.log("Firebase app initialized:", !!firebase.app());
+    console.log("Database reference:", !!database);
+
     // Show a visual indicator instead of blocking alert
     const statusDiv = document.createElement('div');
     statusDiv.id = 'upload-status';
@@ -264,24 +268,32 @@ function confirmCitySelection() {
     statusDiv.innerText = 'מעלה נתונים...';
     document.body.appendChild(statusDiv);
 
-    // Upload to Firebase
+    // Validate image data
+    if (!dollPhotoURL.startsWith('data:image/')) {
+        console.error("Invalid image data URL!");
+        alert("שגיאה: נתוני התמונה לא תקינים");
+        document.body.removeChild(statusDiv);
+        return;
+    }
+
+    // Upload to Firebase - EXACT structure as bigmap (no userName for now)
     const uploadData = {
         city: city.name,
         image: dollPhotoURL,
-        userName: userName,
         time: Date.now()
     };
 
     const imageSizeMB = (uploadData.image.length / 1024 / 1024).toFixed(2);
     console.log("Upload data prepared:", {
         city: uploadData.city,
-        userName: uploadData.userName,
         imageLength: uploadData.image.length,
         imageSizeMB: imageSizeMB + " MB",
         time: uploadData.time
     });
 
-    // Simplified upload - matching working bigmap implementation
+    console.log("About to call database.ref('uploads').push()...");
+
+    // EXACT same pattern as working bigmap
     database.ref('uploads').push(uploadData).then(() => {
         console.log("✓ Firebase upload successful!");
         statusDiv.innerText = 'העלאה הצליחה! עובר למפה...';
