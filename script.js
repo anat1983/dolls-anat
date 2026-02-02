@@ -208,22 +208,73 @@ function closeConfirmDialog() {
 function confirmCitySelection() {
     const city = missionControl[currentCityKey];
 
-    console.log("Confirming city:", city.name);
-    console.log("User:", userName);
-    console.log("Photo URL length:", dollPhotoURL ? dollPhotoURL.length : 0);
+    console.log("=== confirmCitySelection called ===");
+    console.log("currentCityKey:", currentCityKey);
+    console.log("city object:", city);
+    console.log("userName:", userName);
+    console.log("dollPhotoURL exists:", !!dollPhotoURL);
+    console.log("dollPhotoURL length:", dollPhotoURL ? dollPhotoURL.length : 0);
+
+    // Check if we have all required data
+    if (!userName) {
+        alert("שגיאה: לא הוזן שם");
+        console.error("Validation failed: no userName");
+        return;
+    }
+    if (!dollPhotoURL) {
+        alert("שגיאה: לא הועלתה תמונת בובה");
+        console.error("Validation failed: no dollPhotoURL");
+        return;
+    }
+    if (!city) {
+        alert("שגיאה: לא נבחרה עיר");
+        console.error("Validation failed: no city");
+        return;
+    }
+
+    // Close the confirm dialog
+    closeConfirmDialog();
+
+    console.log("Starting Firebase upload...");
+
+    // Show a visual indicator instead of blocking alert
+    const statusDiv = document.createElement('div');
+    statusDiv.id = 'upload-status';
+    statusDiv.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,255,255,0.95);color:#000;padding:30px;border:2px solid #00ffff;box-shadow:0 0 50px #00ffff;z-index:99999;font-size:1.5rem;text-align:center;';
+    statusDiv.innerText = 'מעלה נתונים...';
+    document.body.appendChild(statusDiv);
 
     // Upload to Firebase
-    database.ref('uploads').push({
+    const uploadData = {
         city: city.name,
         image: dollPhotoURL,
         userName: userName,
         time: Date.now()
-    }).then(() => {
-        console.log("Upload successful, redirecting...");
-        // Redirect to map after successful upload
-        window.location.href = 'map.html';
-    }).catch((error) => {
-        console.error("Upload error:", error);
-        alert("שגיאה בשמירת הנתונים: " + error.message);
+    };
+
+    console.log("Upload data prepared:", {
+        city: uploadData.city,
+        userName: uploadData.userName,
+        imageLength: uploadData.image.length,
+        time: uploadData.time
     });
+
+    database.ref('uploads').push(uploadData)
+        .then(() => {
+            console.log("✓ Firebase upload successful!");
+            statusDiv.innerText = 'העלאה הצליחה! עובר למפה...';
+
+            // Redirect after a short delay to ensure upload completes
+            setTimeout(() => {
+                console.log("Redirecting to map.html...");
+                window.location.href = 'map.html';
+            }, 500);
+        })
+        .catch((error) => {
+            console.error("✗ Firebase upload error:", error);
+            console.error("Error code:", error.code);
+            console.error("Error message:", error.message);
+            document.body.removeChild(statusDiv);
+            alert("שגיאה בשמירת הנתונים: " + error.message);
+        });
 }
