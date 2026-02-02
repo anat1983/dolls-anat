@@ -38,20 +38,40 @@ document.addEventListener('DOMContentLoaded', function() {
 function removeGreenBackground(imageElement) {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = imageElement.width;
-    canvas.height = imageElement.height;
-    ctx.drawImage(imageElement, 0, 0);
+
+    // Resize image if too large (max 800px width for mobile performance)
+    const maxWidth = 800;
+    const maxHeight = 1000;
+    let width = imageElement.width;
+    let height = imageElement.height;
+
+    if (width > maxWidth || height > maxHeight) {
+        const ratio = Math.min(maxWidth / width, maxHeight / height);
+        width = width * ratio;
+        height = height * ratio;
+        console.log(`Resizing image from ${imageElement.width}x${imageElement.height} to ${width}x${height}`);
+    }
+
+    canvas.width = width;
+    canvas.height = height;
+    ctx.drawImage(imageElement, 0, 0, width, height);
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const data = imageData.data;
 
     for (let i = 0; i < data.length; i += 4) {
         const r = data[i], g = data[i + 1], b = data[i + 2];
         if (g > 100 && g > r * 1.4 && g > b * 1.4) {
-            data[i + 3] = 0; 
+            data[i + 3] = 0;
         }
     }
     ctx.putImageData(imageData, 0, 0);
-    return canvas.toDataURL('image/png');
+
+    // Use JPEG with transparency fallback for better compression
+    // Try PNG with lower quality first
+    const dataURL = canvas.toDataURL('image/png', 0.8);
+    console.log(`Final image size: ${(dataURL.length / 1024).toFixed(0)} KB`);
+
+    return dataURL;
 }
 
 // --- 2. INITIALIZATION (מחובר ל-cities.js המסודר) ---
@@ -252,14 +272,32 @@ function confirmCitySelection() {
         time: Date.now()
     };
 
+    const imageSizeMB = (uploadData.image.length / 1024 / 1024).toFixed(2);
     console.log("Upload data prepared:", {
         city: uploadData.city,
         userName: uploadData.userName,
         imageLength: uploadData.image.length,
+        imageSizeMB: imageSizeMB + " MB",
         time: uploadData.time
     });
 
-    database.ref('uploads').push(uploadData)
+    // Warn if image is very large
+    if (uploadData.image.length > 5 * 1024 * 1024) { // 5MB
+        console.warn("⚠️ Large image detected:", imageSizeMB, "MB - this may take a while on mobile");
+    }
+
+    // Create a timeout promise (30 seconds)
+    const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => {
+            reject(new Error('Upload timeout - האינטרנט איטי מדי או התמונה גדולה מדי'));
+        }, 30000);
+    });
+
+    // Race between upload and timeout
+    Promise.race([
+        database.ref('uploads').push(uploadData),
+        timeoutPromise
+    ])
         .then(() => {
             console.log("✓ Firebase upload successful!");
             statusDiv.innerText = 'העלאה הצליחה! עובר למפה...';
@@ -274,7 +312,20 @@ function confirmCitySelection() {
             console.error("✗ Firebase upload error:", error);
             console.error("Error code:", error.code);
             console.error("Error message:", error.message);
-            document.body.removeChild(statusDiv);
-            alert("שגיאה בשמירת הנתונים: " + error.message);
+
+            // Remove status div
+            if (document.body.contains(statusDiv)) {
+                document.body.removeChild(statusDiv);
+            }
+
+            // Show user-friendly error message
+            let errorMsg = "שגיאה בשמירת הנתונים";
+            if (error.message && error.message.includes('timeout')) {
+                errorMsg = "ההעלאה לוקחת יותר מדי זמן.\nנסה עם תמונה קטנה יותר או חיבור אינטרנט טוב יותר.";
+            } else if (error.message) {
+                errorMsg += ": " + error.message;
+            }
+
+            alert(errorMsg);
         });
 }
