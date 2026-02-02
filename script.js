@@ -1,5 +1,6 @@
 let userName = "";
 let dollPhotoURL = "";
+let dollThumbnailURL = "";
 let currentPhotoIndex = 0;
 let currentCityKey = "";
 let slideInterval;
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const img = new Image();
             img.onload = function() {
                 dollPhotoURL = removeGreenBackground(img);
+                dollThumbnailURL = createThumbnail(img);
                 statusText.innerText = "סטטוס: הרקע הירוק הוסר בהצלחה! ✓";
                 statusText.style.color = "#00ff00";
             };
@@ -71,6 +73,19 @@ function removeGreenBackground(imageElement) {
     const dataURL = canvas.toDataURL('image/png', 0.8);
     console.log(`Final image size: ${(dataURL.length / 1024).toFixed(0)} KB`);
 
+    return dataURL;
+}
+
+function createThumbnail(imageElement) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const thumbWidth = 90;
+    const thumbHeight = 120;
+    canvas.width = thumbWidth;
+    canvas.height = thumbHeight;
+    ctx.drawImage(imageElement, 0, 0, thumbWidth, thumbHeight);
+    const dataURL = canvas.toDataURL('image/jpeg', 0.6);
+    console.log(`Thumbnail size: ${(dataURL.length / 1024).toFixed(0)} KB`);
     return dataURL;
 }
 
@@ -316,7 +331,8 @@ function confirmCitySelection() {
     document.body.appendChild(statusDiv);
 
     // Validate image data
-    if (!dollPhotoURL.startsWith('data:image/')) {
+    const imageToUpload = dollThumbnailURL || dollPhotoURL;
+    if (!imageToUpload.startsWith('data:image/')) {
         console.error("Invalid image data URL!");
         alert("שגיאה: נתוני התמונה לא תקינים");
         document.body.removeChild(statusDiv);
@@ -324,9 +340,10 @@ function confirmCitySelection() {
     }
 
     // Upload to Firebase with unique ID for each doll
+    // Use compressed thumbnail for fast upload (map shows images at 45x60px)
     const uploadData = {
         city: city.name,
-        image: dollPhotoURL,
+        image: dollThumbnailURL || dollPhotoURL,
         userName: userName,
         time: Date.now(),
         uploadId: Date.now() + '_' + Math.random().toString(36).substring(2, 11)
