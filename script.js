@@ -42,43 +42,80 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// החליפי את הפונקציה removeGreenBackground הישנה בזו:
 function removeGreenBackground(imageElement) {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
 
-    // Resize image if too large (max 800px width for mobile performance)
     const maxWidth = 800;
     const maxHeight = 1000;
     let width = imageElement.width;
     let height = imageElement.height;
 
+    // שינוי גודל אם התמונה ענקית
     if (width > maxWidth || height > maxHeight) {
         const ratio = Math.min(maxWidth / width, maxHeight / height);
         width = width * ratio;
         height = height * ratio;
-        console.log(`Resizing image from ${imageElement.width}x${imageElement.height} to ${width}x${height}`);
     }
 
     canvas.width = width;
     canvas.height = height;
     ctx.drawImage(imageElement, 0, 0, width, height);
+    
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const data = imageData.data;
 
+    // הגדרות רגישות לירוק (Hue)
+    const greenHueMin = 70;  
+    const greenHueMax = 170;
+
     for (let i = 0; i < data.length; i += 4) {
-        const r = data[i], g = data[i + 1], b = data[i + 2];
-        if (g > 100 && g > r * 1.4 && g > b * 1.4) {
-            data[i + 3] = 0;
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+
+        // המרה ל-HSL לזיהוי גוון מדויק
+        const hsl = rgbToHsl(r, g, b);
+        const hue = hsl[0] * 360; 
+        const sat = hsl[1];
+        const light = hsl[2];
+
+        // זיהוי חכם: האם הגוון הוא ירוק והאם הוא מספיק "צבעוני"?
+        if (hue >= greenHueMin && hue <= greenHueMax && sat > 0.25 && light > 0.2) {
+            
+            // "ריכוך" (Feathering) בקצוות
+            let alpha = 0;
+            if (sat < 0.35) {
+                alpha = (0.35 - sat) * 4 * 255; 
+            }
+            data[i + 3] = alpha; // הופך לשקוף
         }
     }
+    
     ctx.putImageData(imageData, 0, 0);
+    return canvas.toDataURL('image/png');
+}
 
-    // Use JPEG with transparency fallback for better compression
-    // Try PNG with lower quality first
-    const dataURL = canvas.toDataURL('image/png', 0.8);
-    console.log(`Final image size: ${(dataURL.length / 1024).toFixed(0)} KB`);
+// --- חובה להוסיף גם את פונקציית העזר הזו (אפשר בסוף הקובץ) ---
+function rgbToHsl(r, g, b) {
+    r /= 255, g /= 255, b /= 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
 
-    return dataURL;
+    if (max === min) {
+        h = s = 0; // אפור
+    } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+    return [h, s, l];
 }
 
 function createThumbnail(imageElement) {
