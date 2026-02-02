@@ -209,26 +209,28 @@ svg { height: 70vh; filter: drop-shadow(0 0 15px var(--neon-cyan)); }
 }
 /* --- הוספת בובות בפינות (doll1 + doll2) --- */
 
+/* --- הוספת בובות בפינות (גירסה מוגדלת ומתוקנת) --- */
+
 .sync-box {
-    position: relative; /* מאפשר לבובות להתמקם ביחס לריבוע */
+    position: relative; /* העוגן של הבובות */
 }
 
 .corner-doll {
     position: absolute;
-    width: 150px;       /* גודל הבובה - מתאים לריבוע הגדול שלך (700px) */
+    width: 280px;       /* הגדלתי מ-150 ל-280 כדי שיהיו בולטות */
     height: auto;
-    top: -90px;         /* גורם להן "לצוף" מעל הקו העליון */
-    z-index: 5001;      /* מבטיח שהן מעל התיבה (שהיא 5000) */
-    filter: drop-shadow(0 0 10px var(--neon-cyan)); /* הילה זוהרת */
-    pointer-events: none; /* כדי שלא יפריעו להקלדה */
+    top: -160px;        /* משכתי אותן יותר למעלה בגלל הגודל */
+    z-index: 5001;
+    filter: drop-shadow(0 0 15px var(--neon-cyan));
+    pointer-events: none;
 }
 
 .doll-left {
-    left: -40px;        /* מיקום בפינה השמאלית העליונה */
-    transform: rotate(-10deg); /* הטיה קלה למראה מעוצב */
+    left: -100px;       /* מוציא את הבובה שמאלה מהמסגרת */
+    transform: rotate(-15deg);
 }
 
 .doll-right {
-    right: -40px;       /* מיקום בפינה הימנית העליונה */
-    transform: rotate(10deg);  /* הטיה קלה לצד השני */
+    right: -100px;      /* מוציא את הבובה ימינה מהמסגרת */
+    transform: rotate(15deg);
 }
