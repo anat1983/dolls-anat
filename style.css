@@ -131,26 +131,26 @@
         cursor: pointer;
         box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
     }
-    /* 2. Give the map the remaining space */
+    /* 3. The Viewport - Center the map */
     #map-viewport {
-        flex: 1; /* Take whatever space is left */
+        flex: 1;            /* Take remaining space */
         width: 100%;
-        /* No height setting here, flex handles it */
         display: flex;
         justify-content: center;
         align-items: center;
-        overflow: hidden;
+        overflow: hidden;   /* Hide anything outside */
         padding: 0;
         position: relative;
     }
-    /* 3. The Container - Limits the size */
+
+    /* 4. The Zoom Container - Lock Proportions */
     #map-zoom-container {
         position: relative;
-        /* Force the map to be 10% shorter than the available space so it never touches edges */
-        height: 90%; 
-        width: auto;
+        height: 100%;       /* Fill the height of the viewport */
+        width: auto;        /* Width adjusts automatically */
+        max-width: 100%;    /* Never wider than screen */
         
-        aspect-ratio: 300 / 850; 
+        aspect-ratio: 300 / 850; /* Lock the Israel shape */
         
         display: flex;
         justify-content: center;
@@ -158,24 +158,23 @@
         transition: transform 2s cubic-bezier(0.4, 0, 0.2, 1);
         margin: auto;
     }
-    /* 4. The SVG - No stretching allowed */
+
+    /* 5. The SVG - Fit inside container */
     svg {
-        height: 100%;
-        width: 100%;
+        height: 95%;        /* 5% buffer zone */
+        width: auto;
         display: block;
-        /* This ensures the map scales down if the screen is too narrow */
-        object-fit: contain; 
+        overflow: visible;  /* Allow glow effects to show */
         filter: drop-shadow(0 0 15px var(--neon-cyan));
-        overflow: visible;
     }
+
     .israel-shape { 
-        fill: rgba(0, 255, 255, 0.05); /* Very subtle inner glow */
+        fill: rgba(0, 255, 255, 0.05); 
         stroke: var(--neon-cyan); 
         stroke-width: 2; 
         stroke-linejoin: round;
-        filter: drop-shadow(0 0 5px var(--neon-cyan)); /* Outer neon glow */
+        filter: drop-shadow(0 0 5px var(--neon-cyan)); 
     }
-
     /* City markers and labels */
     .city-dot {
         position: absolute;
@@ -332,119 +331,41 @@
     }
 
     /* Responsive design for mobile and tablet */
+/* Responsive design for mobile and tablet */
     @media (max-width: 768px) {
         .hud-header {
-                height: 100px; /* Smaller header on mobile */
-            }
-        .sync-box {
-            width: 90%;
-            padding: 30px 20px;
-            min-height: auto;
+            height: 100px; /* Smaller header */
+            flex: 0 0 100px;
         }
 
-        .sync-box h1 {
-            font-size: 2rem;
-        }
-
-        .terminal-input {
-            width: 90%;
-            font-size: 1.4rem;
-            padding: 12px;
-        }
-
-        .btn {
-            font-size: 1rem;
-            padding: 12px 25px;
-        }
-
-        .control-panel {
-            flex-direction: row; 
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-        }
-            
-        #destination {
-            width: 180px; 
-            height: 40px;
-            font-size: 0.9rem;
-        }
-
-        #welcome-message {
-            font-size: 1rem;
-        }
-
-        /* FIX: Prevents vertical overflow on mobile */
         #map-viewport {
-            flex: 1;
             padding: 5px;
-            align-items: center;
-            /* height: auto;
-            min-height: 0; */
         }
 
-        /* On mobile, shrink slightly to avoid hitting the edges */
-    /* Ensure this matches the logic we set earlier */
         #map-zoom-container {
-            height: 90%; 
-            max-height: 85%;/* Safety buffer */
+            height: 90%; /* Smaller map on mobile to avoid header/footer */
+            max-height: 90%;
         }
 
         svg {
             height: 100%;
             width: auto;
-            max-height: 100%;
         }
 
-        .city-label {
-            font-size: 6px;
-        }
-
-        .city-dot {
-            width: 3px;
-            height: 3px;
-        }
-
-        .modal-container {
-            flex-direction: column;
-            width: 95%;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .selfie-view {
-            width: 100%;
-            height: 300px;
-        }
-
-        .fact-card {
-            width: 100%;
-            border-right: none;
-            border-top: 1px solid var(--neon-cyan);
-        }
-
-        .confirm-box {
-            width: 90%;
-            padding: 30px 20px;
-        }
-
-        .confirm-box h2 {
-            font-size: 1.8rem;
-        }
-
-        .map-access-btn {
-            bottom: 15px;
-            right: 15px;
-            padding: 10px 15px;
-            font-size: 0.9rem;
-        }
-
-        .map-access-btn svg {
-            width: 20px;
-            height: 20px;
-        }
+        /* Keep your existing mobile styles for inputs/buttons below */
+        .sync-box { width: 90%; padding: 30px 20px; min-height: auto; }
+        .sync-box h1 { font-size: 2rem; }
+        .terminal-input { width: 90%; font-size: 1.4rem; padding: 12px; }
+        .btn { font-size: 1rem; padding: 12px 25px; }
+        .control-panel { flex-direction: row; gap: 10px; }
+        #destination { width: 180px; height: 40px; font-size: 0.9rem; }
+        
+        /* Utilities resizing */
+        .city-label { font-size: 6px; }
+        .city-dot { width: 3px; height: 3px; }
+        .modal-container { flex-direction: column; width: 95%; max-height: 90vh; overflow-y: auto; }
+        .selfie-view { width: 100%; height: 300px; }
     }
-
     @media (min-width: 769px) and (max-width: 1024px) {
         .sync-box {
             width: 600px;
