@@ -30,14 +30,16 @@
     <div id="main-interface" style="display: none;">
         <div class="hud-header">
             <h2 id="welcome-message">SYS_READY // </h2>
-            <select id="destination" onchange="startTravel(this.value)">
-                <option value="">-- בחר עיר --</option>
-            </select>
+            <div class="control-panel">
+                <select id="destination" onchange="startTravel(this.value)">
+                    <option value="">-- בחר עיר --</option>
+                </select>
+            </div>
         </div>
         <div id="map-viewport">
             <div id="map-zoom-container">
                 <svg viewBox="0 0 300 850" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-                    <path class="israel-shape" d="M158,15 L182,30 L195,55 L202,85 L215,130 L228,180 L225,210 L210,235 L198,265 L195,300 L205,340 L210,385 L195,440 L180,490 L165,550 L150,620 L138,690 L130,760 L125,830 L110,830 L95,760 L85,690 L80,600 L88,520 L92,450 L82,390 L70,330 L65,270 L68,220 L82,185 L95,145 L102,105 L112,70 L122,40 L135,25 L150,18 Z" />
+                    <path class="israel-shape" d="M155,10 L170,18 L188,30 L198,55 L202,85 L215,130 L228,185 L225,220 L210,245 L195,275 L195,315 L205,355 L210,405 L195,460 L180,510 L165,570 L145,650 L132,730 L125,840 L108,840 L95,765 L85,685 L82,605 L88,525 L94,455 L84,395 L70,335 L64,275 L68,225 L82,195 L95,155 L102,115 L112,80 L122,50 L135,35 L150,28 Z" />
                 </svg>
                 <div id="markers-layer"></div>
                 <div id="doll-container">

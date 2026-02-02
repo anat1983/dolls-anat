@@ -1,404 +1,457 @@
-:root {
-    --neon-pink: #ff00ff;
-    --neon-cyan: #00ffff;
-    --bg-black: #020005;
-    --glass: rgba(13, 2, 33, 0.96);
-}
+    :root {
+        --neon-pink: #ff00ff;
+        --neon-cyan: #00ffff;
+        --bg-black: #020005;
+        --glass: rgba(13, 2, 33, 0.96);
+    }
 
-body, html {
-    margin: 0; padding: 0; width: 100%; height: 100%;
-    background: var(--bg-black); color: white;
-    font-family: 'Orbitron', 'Heebo', sans-serif; overflow: hidden;
-    direction: rtl;
-}
+    body, html {
+        margin: 0; 
+        padding: 0; 
+        width: 100%; 
+        height: 100%;
+        /* Use dynamic viewport height to fix mobile browser bars */
+        height: 100dvh; 
+        background: var(--bg-black); 
+        color: white;
+        font-family: 'Orbitron', 'Heebo', sans-serif; 
+        overflow: hidden;
+        direction: rtl;
+        display: flex;
+        flex-direction: column;
+    }
 
-/* אפקטים של רקע */
-.bg-grid {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-image: linear-gradient(rgba(0,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,255,0.05) 1px, transparent 1px);
-    background-size: 40px 40px; z-index: 1; pointer-events: none;
-}
+    /* אפקטים של רקע */
+    .bg-grid {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background-image: linear-gradient(rgba(0,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,255,0.05) 1px, transparent 1px);
+        background-size: 40px 40px; z-index: 1; pointer-events: none;
+    }
 
-.scan-line {
-    position: fixed; top: 0; left: 0; width: 100%; height: 4px;
-    background: rgba(0, 255, 255, 0.2); box-shadow: 0 0 20px var(--neon-cyan);
-    z-index: 2; animation: scanMove 8s linear infinite; opacity: 0.5;
-}
+    .scan-line {
+        position: fixed; top: 0; left: 0; width: 100%; height: 4px;
+        background: rgba(0, 255, 255, 0.2); box-shadow: 0 0 20px var(--neon-cyan);
+        z-index: 2; animation: scanMove 8s linear infinite; opacity: 0.5;
+    }
 
-@keyframes scanMove { 0% { top: -5%; } 100% { top: 105%; } }
+    @keyframes scanMove { 0% { top: -5%; } 100% { top: 105%; } }
 
-/* מסך סנכרון (מסך פתיחה) */
-.hud-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.95); z-index: 5000; display: flex; align-items: center; justify-content: center;
-}
+    /* מסך סנכרון (מסך פתיחה) */
+    .hud-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.95); z-index: 5000; display: flex; align-items: center; justify-content: center;
+    }
 
-.sync-box {
-    width: 700px; 
-    min-height: 500px; 
-    padding: 60px; 
-    border: 2px solid var(--neon-cyan);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px; 
-    text-align: center; 
-    background: var(--glass); 
-    box-shadow: 0 0 40px var(--neon-cyan);
-}
-
-.sync-box h1 {
-    font-size: 2.8rem;
-    margin-bottom: 10px;
-    color: var(--neon-cyan);
-    text-shadow: 0 0 15px var(--neon-cyan);
-}
-
-.terminal-input {
-    width: 80%;
-    background: transparent;
-    border: 1px solid var(--neon-pink);
-    color: var(--neon-pink);
-    padding: 18px;
-    margin: 25px 0;
-    font-family: 'Share Tech Mono';
-    text-align: center;
-    font-size: 1.8rem;
-    outline: none;
-}
-
-.terminal-input::placeholder {
-    font-size: 1.4rem;
-}
-
-/* ממשק המפה */
-.hud-header { 
-    padding: 20px; 
-    text-align: center; 
-    border-bottom: 2px solid var(--neon-cyan); 
-    background: rgba(0,0,0,0.8);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
-#destination {
-    width: 85%;
-    max-width: 350px;
-    height: 50px;
-    background: var(--bg-black);
-    color: var(--neon-cyan);
-    border: 2px solid var(--neon-cyan);
-    font-family: 'Orbitron', 'Heebo', sans-serif;
-    font-size: 1.2rem;
-    text-align: center;
-    border-radius: 10px;
-    box-shadow: 0 0 15px var(--neon-cyan);
-    appearance: none;
-    -webkit-appearance: none;
-    cursor: pointer;
-}
-
-#map-viewport {
-    flex: 1; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    background: radial-gradient(circle, rgba(0,255,255,0.03) 0%, transparent 80%);
-    overflow: hidden; /* Keeps the zoom contained */
-    min-height: 0;   /* Crucial for flexbox children to shrink properly */
-}
-
-#map-zoom-container {
-    position: relative;
-    height: 95%;      /* Map takes up 95% of the available height */
-    max-height: 85vh; /* Prevents it from being taller than the screen */
-    aspect-ratio: 300 / 850; 
-    transition: transform 2s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    justify-content: center;
-}
-
-svg { 
-    width: 100%;
-    height: 100%;
-    display: block;
-    filter: drop-shadow(0 0 15px var(--neon-cyan)); 
-}
-
-.israel-shape { 
-    fill: rgba(0, 255, 255, 0.1); 
-    stroke: var(--neon-cyan); 
-    stroke-width: 2; 
-    stroke-linejoin: round;
-}
-
-/* City markers and labels */
-.city-dot {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: var(--neon-cyan);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 0 5px var(--neon-cyan);
-    z-index: 50;
-}
-
-.city-label {
-    position: absolute;
-    transform: translate(-50%, 5px);
-    font-size: 8px;
-    color: var(--neon-cyan);
-    text-shadow: 0 0 5px var(--neon-cyan);
-    white-space: nowrap;
-    pointer-events: none;
-    z-index: 50;
-    font-family: 'Heebo', sans-serif;
-    font-weight: 300;
-}
-
-/* הבובה על המפה */
-#doll-container { 
-    position: absolute; width: 60px; height: 60px; 
-    transform: translate(-50%, -50%); transition: 2s ease-in-out; 
-    z-index: 60; pointer-events: none;
-}
-
-#map-doll-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 8px var(--neon-cyan)); }
-
-/* סלפי ומודאל */
-.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9000; display: none; align-items: center; justify-content: center; }
-
-.modal-container { display: flex; border: 1px solid var(--neon-cyan); background: var(--bg-black); }
-
-.selfie-view { position: relative; width: 450px; height: 550px; overflow: hidden; background: #000; }
-
-#city-bg { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    transition: opacity 0.5s ease-in-out; 
-}
-
-.doll-overlay { 
-    position: absolute; bottom: -20px; right: -20px; 
-    width: 280px; transform: rotate(-5deg); 
-    z-index: 10;
-}
-
-#selfie-doll-img { 
-    width: 100%; 
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.7)); 
-}
-
-.fact-card { width: 260px; padding: 25px; background: var(--glass); text-align: right; border-right: 1px solid var(--neon-cyan); }
-
-/* כפתורים משופרים */
-.btn { 
-    background: transparent; 
-    border: 2px solid var(--neon-cyan); 
-    color: var(--neon-cyan); 
-    padding: 16px 35px; 
-    cursor: pointer; 
-    font-family: 'Orbitron'; 
-    margin: 10px; 
-    font-weight: bold; 
-    font-size: 1.2rem; 
-    transition: 0.3s; 
-}
-
-.btn:hover { background: var(--neon-cyan); color: #000; box-shadow: 0 0 20px var(--neon-cyan); }
-
-.btn-pink { border-color: var(--neon-pink); color: var(--neon-pink); }
-
-.btn-pink:hover { background: var(--neon-pink); color: #000; box-shadow: 0 0 20px var(--neon-pink); }
-
-#flash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; opacity: 0; z-index: 9999; pointer-events: none; transition: 0.1s; }
-
-/* הודעת אישור (Confirm) */
-.confirm-box {
-    width: 550px; 
-    padding: 50px; 
-    border: 2px solid var(--neon-pink);
-    text-align: center; 
-    background: var(--glass); 
-    box-shadow: 0 0 50px var(--neon-pink);
-    animation: pulse-glow 2s ease-in-out infinite;
-}
-
-.confirm-box h2 {
-    font-size: 2.2rem;
-    margin-bottom: 20px;
-    color: var(--neon-pink);
-    text-shadow: 0 0 20px var(--neon-pink);
-}
-
-.confirm-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 30px;
-}
-
-.confirm-buttons .btn {
-    width: 100%;
-    font-size: 1.3rem;
-    padding: 18px;
-}
-
-@keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 50px var(--neon-pink); }
-    50% { box-shadow: 0 0 80px var(--neon-pink), 0 0 100px rgba(255, 0, 255, 0.5); }
-}
-
-/* Map access button */
-.map-access-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px 25px;
-    background: var(--glass);
-    border: 2px solid var(--neon-cyan);
-    border-radius: 10px;
-    color: var(--neon-cyan);
-    text-decoration: none;
-    font-family: 'Orbitron', 'Heebo', sans-serif;
-    font-weight: bold;
-    font-size: 1.1rem;
-    box-shadow: 0 0 30px var(--neon-cyan);
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.map-access-btn:hover {
-    background: var(--neon-cyan);
-    color: var(--bg-black);
-    box-shadow: 0 0 50px var(--neon-cyan);
-    transform: translateY(-2px);
-}
-
-.map-access-btn svg {
-    width: 30px;
-    height: 30px;
-    filter: none;
-}
-
-/* Responsive design for mobile and tablet */
-@media (max-width: 768px) {
     .sync-box {
-        width: 90%;
-        padding: 30px 20px;
-        min-height: auto;
+        width: 700px; 
+        min-height: 500px; 
+        padding: 60px; 
+        border: 2px solid var(--neon-cyan);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px; 
+        text-align: center; 
+        background: var(--glass); 
+        box-shadow: 0 0 40px var(--neon-cyan);
     }
 
     .sync-box h1 {
-        font-size: 2rem;
+        font-size: 2.8rem;
+        margin-bottom: 10px;
+        color: var(--neon-cyan);
+        text-shadow: 0 0 15px var(--neon-cyan);
     }
 
     .terminal-input {
-        width: 90%;
+        width: 80%;
+        background: transparent;
+        border: 1px solid var(--neon-pink);
+        color: var(--neon-pink);
+        padding: 18px;
+        margin: 25px 0;
+        font-family: 'Share Tech Mono';
+        text-align: center;
+        font-size: 1.8rem;
+        outline: none;
+    }
+
+    .terminal-input::placeholder {
         font-size: 1.4rem;
-        padding: 12px;
+    }
+    /* 1. Force the interface to never grow larger than the screen */
+    #main-interface {
+        height: 100vh;
+        /* Use dynamic viewport height for modern browsers */
+        height: 100dvh; 
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    /* 2. The Header - fixed height */
+    .hud-header { 
+        padding: 10px 15px; /* Reduced padding to save vertical space */
+        text-align: center; 
+        border-bottom: 2px solid var(--neon-cyan); 
+        background: var(--glass);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px; /* Tighter gap */
+        z-index: 100;
+    }
+    #welcome-message {
+        margin: 5px 0;
+        font-size: 1.2rem;
+        color: var(--neon-pink);
+        text-shadow: 0 0 10px var(--neon-pink);
+    }
+    .status-indicator {
+        font-size: 0.7rem;
+        color: var(--neon-cyan);
+        letter-spacing: 2px;
+        margin-bottom: -5px;
     }
 
-    .btn {
-        font-size: 1rem;
-        padding: 12px 25px;
+    .control-panel {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+        margin-top: 5px; /* Adds a tiny bit of space below the name */
     }
-
     #destination {
-        width: 90%;
-        font-size: 1rem;
+        width: 250px;
         height: 45px;
+        background: rgba(0, 0, 0, 0.7);
+        color: var(--neon-cyan);
+        border: 1px solid var(--neon-cyan);
+        font-family: 'Orbitron', 'Heebo', sans-serif;
+        font-size: 1.1rem;
+        text-align: center;
+        border-radius: 5px;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
     }
-
     #map-viewport {
-        padding: 5px;
+        flex: 1;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        padding: 20px; /* Gives the map some breathing room */
+        box-sizing: border-box;
     }
 
     #map-zoom-container {
-        height: 80vh; /* Shorter for mobile to leave room for the UI */
+        position: relative;
+        /* This forces the container to be 3.5x taller than it is wide */
+        height: 100%; 
+        aspect-ratio: 300 / 850; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: transform 2s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Prevents the 'cucumber' stretch */
+        max-width: 100%; 
     }
 
     svg {
-        width: 100%;
         height: 100%;
+        width: 100%;
+        /* Ensures the path fits perfectly inside the pillar */
+        display: block;
+        filter: drop-shadow(0 0 15px var(--neon-cyan));
+    }
+    .israel-shape { 
+        fill: rgba(0, 255, 255, 0.05); /* Very subtle inner glow */
+        stroke: var(--neon-cyan); 
+        stroke-width: 2; 
+        stroke-linejoin: round;
+        filter: drop-shadow(0 0 5px var(--neon-cyan)); /* Outer neon glow */
+    }
+
+    /* City markers and labels */
+    .city-dot {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: var(--neon-cyan);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 5px var(--neon-cyan);
+        z-index: 50;
     }
 
     .city-label {
-        font-size: 6px;
+        position: absolute;
+        transform: translate(-50%, 5px);
+        font-size: 8px;
+        color: var(--neon-cyan);
+        text-shadow: 0 0 5px var(--neon-cyan);
+        white-space: nowrap;
+        pointer-events: none;
+        z-index: 50;
+        font-family: 'Heebo', sans-serif;
+        font-weight: 300;
     }
 
-    .city-dot {
-        width: 3px;
-        height: 3px;
+    /* הבובה על המפה */
+    #doll-container { 
+        position: absolute; width: 60px; height: 60px; 
+        transform: translate(-50%, -50%); transition: 2s ease-in-out; 
+        z-index: 60; pointer-events: none;
     }
 
-    .modal-container {
-        flex-direction: column;
-        width: 95%;
+    #map-doll-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 8px var(--neon-cyan)); }
+
+    /* סלפי ומודאל */
+    .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9000; display: none; align-items: center; justify-content: center; }
+
+    .modal-container { display: flex; border: 1px solid var(--neon-cyan); background: var(--bg-black); }
+
+    .selfie-view { position: relative; width: 450px; height: 550px; overflow: hidden; background: #000; }
+
+    #city-bg { 
+        width: 100%; 
+        height: 100%; 
+        object-fit: cover; 
+        transition: opacity 0.5s ease-in-out; 
     }
 
-    .selfie-view {
-        width: 100%;
-        height: 400px;
+    .doll-overlay { 
+        position: absolute; bottom: -20px; right: -20px; 
+        width: 280px; transform: rotate(-5deg); 
+        z-index: 10;
     }
 
-    .fact-card {
-        width: 100%;
-        border-right: none;
-        border-top: 1px solid var(--neon-cyan);
+    #selfie-doll-img { 
+        width: 100%; 
+        filter: drop-shadow(0 10px 20px rgba(0,0,0,0.7)); 
     }
 
+    .fact-card { width: 260px; padding: 25px; background: var(--glass); text-align: right; border-right: 1px solid var(--neon-cyan); }
+
+    /* כפתורים משופרים */
+    .btn { 
+        background: transparent; 
+        border: 2px solid var(--neon-cyan); 
+        color: var(--neon-cyan); 
+        padding: 16px 35px; 
+        cursor: pointer; 
+        font-family: 'Orbitron'; 
+        margin: 10px; 
+        font-weight: bold; 
+        font-size: 1.2rem; 
+        transition: 0.3s; 
+    }
+
+    .btn:hover { background: var(--neon-cyan); color: #000; box-shadow: 0 0 20px var(--neon-cyan); }
+
+    .btn-pink { border-color: var(--neon-pink); color: var(--neon-pink); }
+
+    .btn-pink:hover { background: var(--neon-pink); color: #000; box-shadow: 0 0 20px var(--neon-pink); }
+
+    #flash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; opacity: 0; z-index: 9999; pointer-events: none; transition: 0.1s; }
+
+    /* הודעת אישור (Confirm) */
     .confirm-box {
-        width: 90%;
-        padding: 30px 20px;
+        width: 550px; 
+        padding: 50px; 
+        border: 2px solid var(--neon-pink);
+        text-align: center; 
+        background: var(--glass); 
+        box-shadow: 0 0 50px var(--neon-pink);
+        animation: pulse-glow 2s ease-in-out infinite;
     }
 
     .confirm-box h2 {
-        font-size: 1.8rem;
+        font-size: 2.2rem;
+        margin-bottom: 20px;
+        color: var(--neon-pink);
+        text-shadow: 0 0 20px var(--neon-pink);
     }
 
+    .confirm-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .confirm-buttons .btn {
+        width: 100%;
+        font-size: 1.3rem;
+        padding: 18px;
+    }
+
+    @keyframes pulse-glow {
+        0%, 100% { box-shadow: 0 0 50px var(--neon-pink); }
+        50% { box-shadow: 0 0 80px var(--neon-pink), 0 0 100px rgba(255, 0, 255, 0.5); }
+    }
+
+    /* Map access button */
     .map-access-btn {
-        bottom: 15px;
-        right: 15px;
-        padding: 10px 15px;
-        font-size: 0.9rem;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 15px 25px;
+        background: var(--glass);
+        border: 2px solid var(--neon-cyan);
+        border-radius: 10px;
+        color: var(--neon-cyan);
+        text-decoration: none;
+        font-family: 'Orbitron', 'Heebo', sans-serif;
+        font-weight: bold;
+        font-size: 1.1rem;
+        box-shadow: 0 0 30px var(--neon-cyan);
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .map-access-btn:hover {
+        background: var(--neon-cyan);
+        color: var(--bg-black);
+        box-shadow: 0 0 50px var(--neon-cyan);
+        transform: translateY(-2px);
     }
 
     .map-access-btn svg {
-        width: 20px;
-        height: 20px;
-    }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-    .sync-box {
-        width: 600px;
-        padding: 50px;
+        width: 30px;
+        height: 30px;
+        filter: none;
     }
 
-    .sync-box h1 {
-        font-size: 2.4rem;
+    /* Responsive design for mobile and tablet */
+    @media (max-width: 600px) {
+        .sync-box {
+            width: 90%;
+            padding: 30px 20px;
+            min-height: auto;
+        }
+
+        .sync-box h1 {
+            font-size: 2rem;
+        }
+
+        .terminal-input {
+            width: 90%;
+            font-size: 1.4rem;
+            padding: 12px;
+        }
+
+        .btn {
+            font-size: 1rem;
+            padding: 12px 25px;
+        }
+
+        .control-panel {
+                flex-direction: row; /* Keep label and select side-by-side if possible */
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            #destination {
+                width: 180px; /* Slightly narrower to fit better */
+                height: 40px;
+                font-size: 0.9rem;
+            }
+
+            #welcome-message {
+                font-size: 1rem;
+            }
+
+            #main-map {
+                height: 88vh;
+            }
+        #map-viewport {
+            padding: 10px;
+        }
+
+        #map-zoom-container {
+            height: 100%; /* Respect the flexbox parent instead of forcing vh */
+            width: auto;
+        }
+
+        svg {
+            height: 100%;
+            width: auto;
+        }
+
+        .city-label {
+            font-size: 6px;
+        }
+
+        .city-dot {
+            width: 3px;
+            height: 3px;
+        }
+
+        .modal-container {
+            flex-direction: column;
+            width: 95%;
+        }
+
+        .selfie-view {
+            width: 100%;
+            height: 400px;
+        }
+
+        .fact-card {
+            width: 100%;
+            border-right: none;
+            border-top: 1px solid var(--neon-cyan);
+        }
+
+        .confirm-box {
+            width: 90%;
+            padding: 30px 20px;
+        }
+
+        .confirm-box h2 {
+            font-size: 1.8rem;
+        }
+
+        .map-access-btn {
+            bottom: 15px;
+            right: 15px;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+        }
+
+        .map-access-btn svg {
+            width: 20px;
+            height: 20px;
+        }
     }
 
-    svg {
-        height: 88vh;
-    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+        .sync-box {
+            width: 600px;
+            padding: 50px;
+        }
 
-    .modal-container {
-        flex-direction: row;
-    }
+        .sync-box h1 {
+            font-size: 2.4rem;
+        }
 
-    .selfie-view {
-        width: 400px;
-        height: 500px;
+        svg {
+            height: 88vh;
+        }
+
+        .modal-container {
+            flex-direction: row;
+        }
+
+        .selfie-view {
+            width: 400px;
+            height: 500px;
+        }
     }
-}
