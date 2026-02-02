@@ -285,11 +285,13 @@ function confirmCitySelection() {
         return;
     }
 
-    // Upload to Firebase - EXACT structure as bigmap (no userName for now)
+    // Upload to Firebase with unique ID for each doll
     const uploadData = {
         city: city.name,
         image: dollPhotoURL,
-        time: Date.now()
+        userName: userName,
+        time: Date.now(),
+        uploadId: Date.now() + '_' + Math.random().toString(36).substring(2, 11)
     };
 
     const imageSizeMB = (uploadData.image.length / 1024 / 1024).toFixed(2);
