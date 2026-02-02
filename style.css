@@ -101,17 +101,39 @@ body, html {
 }
 
 #map-viewport {
-    height: 95vh;
+    flex: 1; 
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 10px;
+    background: radial-gradient(circle, rgba(0,255,255,0.03) 0%, transparent 80%);
+    overflow: hidden; /* Keeps the zoom contained */
+    min-height: 0;   /* Crucial for flexbox children to shrink properly */
 }
 
-#map-zoom-container { position: relative; transition: transform 2s cubic-bezier(0.4, 0, 0.2, 1); }
+#map-zoom-container {
+    position: relative;
+    height: 95%;      /* Map takes up 95% of the available height */
+    max-height: 85vh; /* Prevents it from being taller than the screen */
+    aspect-ratio: 300 / 850; 
+    transition: transform 2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    justify-content: center;
+}
 
-svg { height: 92vh; filter: drop-shadow(0 0 15px var(--neon-cyan)); }
+svg { 
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: drop-shadow(0 0 15px var(--neon-cyan)); 
+}
 
-.israel-shape { fill: rgba(0,255,255,0.02); stroke: var(--neon-cyan); stroke-width: 1.5; }
+.israel-shape { 
+    fill: rgba(0, 255, 255, 0.1); 
+    stroke: var(--neon-cyan); 
+    stroke-width: 2; 
+    stroke-linejoin: round;
+}
 
 /* City markers and labels */
 .city-dot {
@@ -297,8 +319,17 @@ svg { height: 92vh; filter: drop-shadow(0 0 15px var(--neon-cyan)); }
         height: 45px;
     }
 
+    #map-viewport {
+        padding: 5px;
+    }
+
+    #map-zoom-container {
+        height: 80vh; /* Shorter for mobile to leave room for the UI */
+    }
+
     svg {
-        height: 85vh;
+        width: 100%;
+        height: 100%;
     }
 
     .city-label {
