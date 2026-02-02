@@ -188,9 +188,9 @@ function startTravel(key) {
     // Step 3: After travel, zoom into the destination
     setTimeout(() => {
         const scale = 5;
-        const zX = (50 - correctCoords.x) * (scale - 1);
-        const zY = (50 - correctCoords.y) * (scale - 1);
-        zoomContainer.style.transform = `scale(${scale}) translate(${zX}%, ${zY}%)`;
+        // Set transform origin to the city coordinates, then scale to zoom in on that exact point
+        zoomContainer.style.transformOrigin = `${correctCoords.x}% ${correctCoords.y}%`;
+        zoomContainer.style.transform = `scale(${scale})`;
 
         // Step 4: Flash and show selfie
         setTimeout(() => {
@@ -239,8 +239,10 @@ function showTravelSelfie(key) {
 
 function closeTravel() {
     clearInterval(slideInterval);
+    const zoomContainer = document.getElementById('map-zoom-container');
     document.getElementById('travel-report').style.display = 'none';
-    document.getElementById('map-zoom-container').style.transform = 'scale(1) translate(0,0)';
+    zoomContainer.style.transform = 'scale(1)';
+    zoomContainer.style.transformOrigin = 'center center';
     document.getElementById('destination').value = "";
     document.getElementById('map-doll-img').style.display = 'none';
 }
