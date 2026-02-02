@@ -27,9 +27,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const img = new Image();
             img.onload = function() {
                 dollPhotoURL = removeGreenBackground(img);
-                dollThumbnailURL = createThumbnail(img);
-                statusText.innerText = "סטטוס: הרקע הירוק הוסר בהצלחה! ✓";
-                statusText.style.color = "#00ff00";
+                // Create thumbnail from the processed image (green removed)
+                const processedImg = new Image();
+                processedImg.onload = function() {
+                    dollThumbnailURL = createThumbnail(processedImg);
+                    statusText.innerText = "סטטוס: הרקע הירוק הוסר בהצלחה! ✓";
+                    statusText.style.color = "#00ff00";
+                };
+                processedImg.src = dollPhotoURL;
             };
             img.src = event.target.result;
         };
@@ -83,8 +88,9 @@ function createThumbnail(imageElement) {
     const thumbHeight = 120;
     canvas.width = thumbWidth;
     canvas.height = thumbHeight;
+    ctx.clearRect(0, 0, thumbWidth, thumbHeight);
     ctx.drawImage(imageElement, 0, 0, thumbWidth, thumbHeight);
-    const dataURL = canvas.toDataURL('image/jpeg', 0.6);
+    const dataURL = canvas.toDataURL('image/png');
     console.log(`Thumbnail size: ${(dataURL.length / 1024).toFixed(0)} KB`);
     return dataURL;
 }
