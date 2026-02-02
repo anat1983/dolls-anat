@@ -187,9 +187,10 @@ function startTravel(key) {
 
     // Step 3: After travel, zoom into the destination
     setTimeout(() => {
-        const zX = (50 - correctCoords.x) * 4.5;
-        const zY = (40 - correctCoords.y) * 4.5;
-        zoomContainer.style.transform = `scale(5) translate(${zX}%, ${zY}%)`;
+        const scale = 5;
+        const zX = (50 - correctCoords.x) * (scale - 1);
+        const zY = (50 - correctCoords.y) * (scale - 1);
+        zoomContainer.style.transform = `scale(${scale}) translate(${zX}%, ${zY}%)`;
 
         // Step 4: Flash and show selfie
         setTimeout(() => {
