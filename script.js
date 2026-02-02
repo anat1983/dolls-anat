@@ -86,15 +86,20 @@ function initializePortal() {
     document.getElementById('sync-screen').style.display = 'none';
     document.getElementById('main-interface').style.display = 'block';
     document.getElementById('welcome-message').innerText = `שלום ${userName}, באיזו עיר אתם גרים?`;
-    document.getElementById('map-doll-img').src = dollPhotoURL;
 
-    // Position doll at Jerusalem and make it visible immediately
+    // Position doll at Jerusalem and make it visible
     const dollContainer = document.getElementById('doll-container');
     const dollImg = document.getElementById('map-doll-img');
     const jerusalemCoords = { x: 52.2, y: 44.7 };
+
     dollContainer.style.left = jerusalemCoords.x + '%';
     dollContainer.style.top = jerusalemCoords.y + '%';
-    dollImg.style.display = 'block';
+
+    // Set image source and make visible when loaded
+    dollImg.onload = function() {
+        dollImg.style.display = 'block';
+    };
+    dollImg.src = dollPhotoURL;
 
     const markersLayer = document.getElementById('markers-layer');
     const select = document.getElementById('destination');
