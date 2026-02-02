@@ -298,7 +298,17 @@
 
         const activeCitiesCount = {};
 
-        database.ref('uploads').on('child_added', (snapshot) => {
+        // Upload pending data from localStorage (saved by index.html for instant redirect)
+        const pending = localStorage.getItem('pendingUpload');
+        if (pending) {
+            localStorage.removeItem('pendingUpload');
+            database.ref('uploads').push(JSON.parse(pending));
+        }
+
+        // Auto-refresh every 30 seconds to keep map up to date
+        setInterval(() => { window.location.reload(); }, 30000);
+
+        database.ref('uploads').limitToLast(30).on('child_added', (snapshot) => {
             const data = snapshot.val();
             const coords = cityCoords[data.city];
 

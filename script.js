@@ -317,68 +317,23 @@ function confirmCitySelection() {
     // Close the confirm dialog
     closeConfirmDialog();
 
-    console.log("Starting Firebase upload...");
-
-    // Test Firebase connection
-    console.log("Firebase app initialized:", !!firebase.app());
-    console.log("Database reference:", !!database);
-
-    // Show a visual indicator instead of blocking alert
-    const statusDiv = document.createElement('div');
-    statusDiv.id = 'upload-status';
-    statusDiv.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,255,255,0.95);color:#000;padding:30px;border:2px solid #00ffff;box-shadow:0 0 50px #00ffff;z-index:99999;font-size:1.5rem;text-align:center;';
-    statusDiv.innerText = 'מעלה נתונים...';
-    document.body.appendChild(statusDiv);
-
     // Validate image data
     const imageToUpload = dollThumbnailURL || dollPhotoURL;
     if (!imageToUpload.startsWith('data:image/')) {
-        console.error("Invalid image data URL!");
         alert("שגיאה: נתוני התמונה לא תקינים");
-        document.body.removeChild(statusDiv);
         return;
     }
 
-    // Upload to Firebase with unique ID for each doll
-    // Use compressed thumbnail for fast upload (map shows images at 45x60px)
+    // Save upload data to localStorage and redirect immediately
+    // map.html will handle the actual Firebase upload in the background
     const uploadData = {
         city: city.name,
-        image: dollThumbnailURL || dollPhotoURL,
+        image: imageToUpload,
         userName: userName,
         time: Date.now(),
         uploadId: Date.now() + '_' + Math.random().toString(36).substring(2, 11)
     };
 
-    const imageSizeMB = (uploadData.image.length / 1024 / 1024).toFixed(2);
-    console.log("Upload data prepared:", {
-        city: uploadData.city,
-        imageLength: uploadData.image.length,
-        imageSizeMB: imageSizeMB + " MB",
-        time: uploadData.time
-    });
-
-    console.log("About to call database.ref('uploads').push()...");
-
-    // EXACT same pattern as working bigmap
-    database.ref('uploads').push(uploadData).then(() => {
-        console.log("✓ Firebase upload successful!");
-        statusDiv.innerText = 'העלאה הצליחה! עובר למפה...';
-
-        // Redirect after a short delay
-        setTimeout(() => {
-            console.log("Redirecting to map.html...");
-            window.location.href = 'map.html';
-        }, 800);
-    }).catch((error) => {
-        console.error("✗ Firebase upload error:", error);
-        console.error("Error code:", error.code);
-        console.error("Error message:", error.message);
-
-        // Remove status div
-        if (document.body.contains(statusDiv)) {
-            document.body.removeChild(statusDiv);
-        }
-
-        alert("שגיאה בשמירת הנתונים: " + (error.message || "Unknown error"));
-    });
+    localStorage.setItem('pendingUpload', JSON.stringify(uploadData));
+    window.location.href = 'map.html';
 }
