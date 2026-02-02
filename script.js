@@ -173,10 +173,10 @@ function startTravel(key) {
     const dollImg = document.getElementById('map-doll-img');
     const zoomContainer = document.getElementById('map-zoom-container');
 
-    const jerusalemCoords = { x: 53.8, y: 41.3 };
+    // UPDATED COORDS FOR NEW MAP
+    const jerusalemCoords = { x: 52.5, y: 40.0 };
     const correctCoords = { x: target.x, y: target.y };
 
-    // Step 1: Position doll at Jerusalem and make it visible
     dollContainer.style.left = jerusalemCoords.x + '%';
     dollContainer.style.top = jerusalemCoords.y + '%';
     dollImg.style.display = 'block';
