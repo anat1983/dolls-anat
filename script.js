@@ -110,6 +110,13 @@ function initializePortal() {
     // שימוש ברשימה הממוינת מתוך cities.js
     const sortedCities = window.sortedCitiesList || Object.keys(missionControl).map(k => ({key: k, ...missionControl[k]}));
 
+    // Major cities to show labels for
+    const majorCities = [
+        "ירושלים", "תל אביב", "חיפה", "באר שבע", "אילת",
+        "קרית שמונה", "נתניה", "אשדוד", "אשקלון", "צפת", "טבריה",
+        "רמת הגולן", "ים המלח", "הגליל", "נהריה", "עכו"
+    ];
+
     sortedCities.forEach(cityObj => {
         // הוספת נקודה למפה
         const dot = document.createElement('div');
@@ -118,13 +125,15 @@ function initializePortal() {
         dot.style.top = cityObj.y + '%';
         markersLayer.appendChild(dot);
 
-        // הוספת שם העיר על המפה
-        const label = document.createElement('div');
-        label.className = 'city-label';
-        label.innerText = cityObj.name;
-        label.style.left = cityObj.x + '%';
-        label.style.top = cityObj.y + '%';
-        markersLayer.appendChild(label);
+        // הוספת שם העיר על המפה - רק לערים הגדולות
+        if (majorCities.includes(cityObj.name)) {
+            const label = document.createElement('div');
+            label.className = 'city-label';
+            label.innerText = cityObj.name;
+            label.style.left = cityObj.x + '%';
+            label.style.top = cityObj.y + '%';
+            markersLayer.appendChild(label);
+        }
 
         // הוספת אופציה לתפריט (הסדר כאן נקבע ע"י המערך הממוין)
         const opt = document.createElement('option');
