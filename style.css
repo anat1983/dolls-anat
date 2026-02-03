@@ -358,9 +358,11 @@ svg { overflow: visible !important; }
         top: -70px;
     }
     .doll-left {
-        left: -45px;
+        left: -65px;
+        transform: rotate(-15deg);
     }
     .doll-right {
         right: -45px;
+        transform: rotate(15deg);
     }
 }
