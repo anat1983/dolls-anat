@@ -354,13 +354,13 @@ svg { overflow: visible !important; }
 /* התאמה למובייל - בובות קישוט קטנות יותר */
 @media (max-width: 768px) {
     .corner-doll {
-        width: 130px;
-        top: -70px;
+        width: 90px;
+        top: -45px;
     }
     .doll-left {
-        left: -50px;
+        left: -20px;
     }
     .doll-right {
-        right: -45px;
+        right: -15px;
     }
 }
